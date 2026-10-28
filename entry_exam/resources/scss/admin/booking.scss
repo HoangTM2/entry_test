@@ -1,0 +1,21 @@
+.search-booking-name {
+    input[type="text"],
+    input[type="date"] {
+        margin-right: 4px;
+        box-sizing: border-box;
+    }
+}
+
+@media (max-width: 768px) {
+    .search-booking-name {
+        padding-left: 16px !important;
+
+        input[type="text"],
+        input[type="date"] {
+            display: block;
+            margin-bottom: 8px;
+            width: 100%;
+            max-width: 320px;
+        }
+    }
+}

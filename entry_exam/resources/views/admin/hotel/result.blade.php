@@ -8,44 +8,27 @@
                 <table class="shopsearchlist_table">
                     <tbody>
                         <tr>
-                            <td nowrap="" id="hotel_name">
-                                ホテル名
-                            </td>
-                            <td nowrap="" id="pref">
-                                都道府県
-                            </td>
-                            <td nowrap="" id="created_at">
-                                登録日
-                            </td>
-                            <td nowrap="" id="updated_at">
-                                更新日
-                            </td>
+                            <td nowrap="" id="hotel_name">ホテル名</td>
+                            <td nowrap="" id="pref">都道府県</td>
+                            <td nowrap="" id="created_at">登録日</td>
+                            <td nowrap="" id="updated_at">更新日</td>
                             <td class="btn_center" id="edit"></td>
                             <td class="btn_center" id="delete"></td>
                         </tr>
                         @foreach($hotelList as $hotel)
                             <tr style="background-color:#BDF1FF">
-                                <td>
-                                    <a href="" target="_blank">{{ $hotel['hotel_name'] }}</a>
-                                </td>
-                                <td>
-                                    {{ $hotel['prefecture']['prefecture_name'] }}
-                                </td>
-                                <td>
-                                    {{ (string) $hotel['created_at'] }}
-                                </td>
-                                <td>
-                                    {{ (string) $hotel['updated_at'] }}
-                                </td>
+                                <td><a href="{{ route('hotelDetail', $hotel['hotel_id']) }}" target="_blank">{{ $hotel['hotel_name'] }}</a></td>
+                                <td>{{ $hotel['prefecture_name'] }}</td>
+                                <td>{{ $hotel['created_at'] }}</td>
+                                <td>{{ $hotel['updated_at'] }}</td>
                                 <td>
                                     <form action="{{ route('adminHotelEditPage') }}" method="get">
-                                        @csrf
                                         <input type="hidden" name="hotel_id" value="{{ $hotel['hotel_id'] }}">
                                         <button type="submit">編集</button>
                                     </form>
                                 </td>
                                 <td>
-                                    <form action="{{ route('adminHotelDeleteProcess') }}" method="post">
+                                    <form action="{{ route('adminHotelDeleteProcess') }}" method="post" class="js-delete-form">
                                         @csrf
                                         <input type="hidden" name="hotel_id" value="{{ $hotel['hotel_id'] }}">
                                         <button type="submit">削除</button>
@@ -60,4 +43,16 @@
             @endif
         </div>
     </div>
+@endsection
+
+@section('page_js')
+    <script>
+        document.querySelectorAll('.js-delete-form').forEach(function (form) {
+            form.addEventListener('submit', function (e) {
+                if (!window.confirm('本当にこのホテル情報を削除しますか？')) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
 @endsection

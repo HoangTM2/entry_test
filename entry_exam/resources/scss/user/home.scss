@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .container{
     .text{
         line-height: 30px;
@@ -6,9 +8,21 @@
         font-size: 20px;
         font-weight: bold;
 
+        @media (max-width: 768px) {
+            font-size: 17px;
+            line-height: 24px;
+        }
     }
     .pref{
         font-size: 18px;
+        display: inline-block;
+        line-height: 28px;
+
+        @media (max-width: 768px) {
+            font-size: 15px;
+            line-height: 26px;
+        }
+
         &::after{
             content: '|';
             padding: 0 0 0 5px;
@@ -19,19 +33,38 @@
             }
         }
         &:hover{
-            color: lighten($color: #000000, $amount: 50%)
+            color: color.adjust(#000000, $lightness: 50%);
         }
     }
     .area_wrapper{
         padding: 10px 0;
+
+        @media (max-width: 768px) {
+            padding: 8px 0;
+        }
     }
     .prefecture_container{
         background: #ffffff90;
         padding: 20px 30px 50px;
+        border-radius: 4px;
+
+        @media (max-width: 768px) {
+            padding: 16px;
+        }
+
         .area_container{
             display: flex;
+
+            @media (max-width: 768px) {
+                flex-direction: column;
+            }
+
             .side-wrapper{
                 width: 50%;
+
+                @media (max-width: 768px) {
+                    width: 100%;
+                }
             }
         }
     }

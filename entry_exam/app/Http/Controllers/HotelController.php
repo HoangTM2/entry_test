@@ -20,12 +20,16 @@ class HotelController extends Controller
         $this->prefecture = $prefecture;
     }
 
-    public function showList(string $prefecture_name_alpha): View
+    public function showList(string $prefecture_name_alpha): View|\Illuminate\Http\RedirectResponse
     {
         // prefecture information
         $prefectures = $this->prefecture
             ->where('prefecture_name_alpha', $prefecture_name_alpha)
             ->first();
+
+        if (!$prefectures) {
+            return redirect()->route('top');
+        }
 
         // hotel information
         $hotels = $this->hotel
@@ -33,17 +37,19 @@ class HotelController extends Controller
             ->inRandomOrder()
             ->get();
 
-
         return view('user.hotellist', compact(
             'prefectures',
             'hotels'
         ));
     }
 
-    public function showDetail(int $hotel_id): View
+    public function showDetail(int $hotel_id): View|\Illuminate\Http\RedirectResponse
     {
-        $hotel = $this->hotel
-            ->find($hotel_id);
+        $hotel = $this->hotel->find($hotel_id);
+
+        if (!$hotel) {
+            return redirect()->route('top');
+        }
 
         return view('user.hotel.detail', compact(
             'hotel'
